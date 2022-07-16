@@ -1,5 +1,10 @@
+CC = gcc -Wall -Werror -Wextra
 
+build: graph.c functions.o
+	$(CC) graph.c functions.o
 
+functions.o: functions.c
+	$(CC) -c functions.c -o functions.o
 
 checks:
 	make cppLint

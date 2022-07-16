@@ -1,10 +1,11 @@
 #ifndef SRC_GRAPH_H_
 #define SRC_GRAPH_H_
-enum TYPE {
+typedef enum TYPE_N {
     NUM,
     OP
-};
-enum FUNK {
+}TYPE;
+
+typedef enum FUNK_N {
     ADD,
     SUBTR,
     NEGATE,
@@ -18,13 +19,17 @@ enum FUNK {
     CTG,
     SQRT,
     LN,
-};
+}FUNK;
+
+
 
 struct lex {
-    enum TYPE type;
+    TYPE type;
     union {
-        enum FUNK func;
+        FUNK func;
         int num;
     }; 
+    struct lex* next;
 };
+
 #endif
