@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "graph.h"
-#include "functions.h"
+//#include "functions.h"
 #include "stack.h"
+#include "data_input.h"
 
 int main()
 {
     // string test
-    char * str = input_string();
+    int flag = 1;
+    char * str = input_string(&flag);
     printf("string %s\n" , str);
     lex* lexem = malloc(sizeof(lex));
     lexem->type = NUM;

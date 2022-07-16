@@ -1,8 +1,9 @@
 #include "stack.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "functions.h"
+//#include "functions.h"
 #include "graph.h"
+#include "data_input.h"
 
 stack* new_node(double data) {
     stack* new_elem = (stack*)malloc(sizeof(stack));

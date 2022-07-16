@@ -21,6 +21,16 @@ typedef enum FUNK_N {
     LN,
 }FUNK;
 
+typedef enum TYPE_OF_LAST_LEXEME {
+    START,
+    OPERATOR,
+    FUNCTION,
+    MINUS,
+    NUMBER,
+    L_BRACKET,
+    R_BRACKET,
+    X,
+}LEX_TYPE;
 
 struct lexical_units {
     TYPE type;
@@ -33,4 +43,4 @@ struct lexical_units {
 
 typedef struct lexical_units lex;
 
-#endif
+#endif  // SRC_GRAPH_H_
