@@ -15,3 +15,6 @@ char* input_string() {
     }
     return res_str;
 }
+
+
+double calculate(lex)

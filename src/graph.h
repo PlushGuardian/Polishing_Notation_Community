@@ -23,13 +23,15 @@ typedef enum FUNK_N {
 
 
 
-struct lex {
+struct lexical_units {
     TYPE type;
     union {
         FUNK func;
         int num;
     }; 
-    struct lex* next;
+    struct lexical_units* next;
 };
+
+typedef struct lexical_units lex;
 
 #endif
