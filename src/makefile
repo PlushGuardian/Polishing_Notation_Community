@@ -1,10 +1,13 @@
 CC = gcc -Wall -Werror -Wextra
 
-build: graph.c functions.o
-	$(CC) graph.c functions.o
+build: graph.c functions.o stack.o
+	$(CC) graph.c functions.o stack.o
 
 functions.o: functions.c
 	$(CC) -c functions.c -o functions.o
+
+stack.o: stack.c
+	$(CC) -c stack.c -o stack.o
 
 checks:
 	make cppLint
