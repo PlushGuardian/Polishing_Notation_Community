@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "functions.h"
+#include "stack.h"
+
 
 char* input_string() {
     char* res_str = (char*)malloc(sizeof(char));
@@ -17,4 +19,4 @@ char* input_string() {
 }
 
 
-double calculate(lex)
+double calculate(lex )

@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "graph.h"
 #include "functions.h"
-
+#include "stack.h"
 
 int main()
 {
