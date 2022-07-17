@@ -1,7 +1,8 @@
 CC = gcc -Wall -Werror -Wextra
+TARGET = ../build
 
 all: graph.c input_and_parse.o RPN.o calculation.o stack_and_struct.a parsing_supplement.o output_supplement.o
-	$(CC) graph.c input_and_parse.o RPN.o calculation.o stack_and_struct.a parsing_supplement.o output_supplement.o
+	$(CC) graph.c input_and_parse.o RPN.o calculation.o stack_and_struct.a parsing_supplement.o output_supplement.o -o $(TARGET)/graph
 
 
 
