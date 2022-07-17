@@ -34,7 +34,7 @@ int main()
     double rara;
     calculate(lexem, &rara, 1);
     printf("result %lf\n", rara) ;
-
+    output(lexem);
     double result;
     flag = flag * calculate(lexem, &result, 1);
     printf("calculate %lf", result);
