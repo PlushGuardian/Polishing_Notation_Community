@@ -1,10 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include "functions.h"
 #include "stack.h"
 #include "graph.h"
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 
 int calculate(lex* queue, double *res) {
     int flag = 1;

@@ -32,15 +32,4 @@ typedef enum TYPE_OF_LAST_LEXEME {
     X,
 }LEX_TYPE;
 
-struct lexical_units {
-    TYPE type;
-    struct lexical_units* next;
-    union {
-        FUNK func;
-        int num;
-    } elem;
-} ;
-
-typedef struct lexical_units lex;
-
 #endif  // SRC_GRAPH_H_

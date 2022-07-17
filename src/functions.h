@@ -4,6 +4,6 @@
 #include "stack.h"
 
 double operations(stack** nums, FUNK oper, int* flag);
-int calculate(lex* queue, double *res)
+double calculate(lex* queue, double *res);
 
 #endif    // SRC_FUNCTIONS_H_

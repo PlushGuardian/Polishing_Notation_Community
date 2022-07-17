@@ -5,6 +5,10 @@
 #include "graph.h"
 #include "data_input.h"
 
+/*---------------------------------------------------------
+OPERATIONS FOR WORKING WITH STACK (USED IN CALCULATION FOR NUMBERS)
+---------------------------------------------------------*/
+
 stack* new_node(double data) {
     stack* new_elem = (stack*)malloc(sizeof(stack));
     new_elem->data = data;
@@ -31,6 +35,10 @@ double pop(stack** root) {
     return popped;
 }
 
+/*---------------------------------------------------------
+OPERATIONS FOR WORKING WITH STRUCTURE (QUEUE OF OPERANDS AND OPERATIONS)
+---------------------------------------------------------*/
+
 lex* new_node_funk(FUNK data) {
     lex* new_elem = (lex*)malloc(sizeof(lex));
     new_elem->elem.func = data;
@@ -45,12 +53,16 @@ lex* new_node_num(double data) {
     return new_elem;
 }
 
-void push_lex(lex** root, TYPE type, double data) {
+void push_lex(lex** root, TYPE type, double data, int *flag) {
     lex* new_elem;
     if (type == NUM)
         new_elem = new_node_num(data);
     else
         new_elem = new_node_funk(data);
+    if (new_elem == NULL) {
+            *flag = -1;
+            free(new_elem);
+        }
     new_elem->next = *root;
     data = data*1;
     *root = new_elem;

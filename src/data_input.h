@@ -3,7 +3,10 @@
 
 char* input_string(int *flag);
 int parse(char* str, lex** queue);
+void print_struct(lex* root);
 
-char check_for_symbol(char ch) ;
+void output_of_type(int num);
+void output_of_lex_type(int num);
+void output_of_func(int num);
 
-#endif
+#endif  // SRC_DATA_INPUT_H_
