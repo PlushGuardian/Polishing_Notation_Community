@@ -28,13 +28,16 @@ void print_one_node(lex* root) {
     printf("    Type ");
     output_of_type(root->type);
     printf("\n");
-    if(root->type == 0)
+    if (root->type == 0) {
         printf("    Number %lf\n", root->elem.num);
-    else{
+    } else if (root->type == 1) {
         printf("    Function %d\n", root->elem.func);
-        output_of_func( root->elem.func);
+        output_of_func(root->elem.func);
         printf("\n");
+    } else {
+        printf("    Variable %d\n", (int)root->elem.is_x);
     }
+
 }
 
 void output_of_type(int num) {
@@ -44,6 +47,9 @@ void output_of_type(int num) {
         break;
         case 1:
         printf("OP");
+        break;
+        case 2:
+        printf("X");
         break;
     }
 }
@@ -72,7 +78,7 @@ void output_of_lex_type(int num) {
         printf("R_BRACKET");
         break;
         case 7:
-        printf("X");
+        printf("VAR");
         break;
     }
 }

@@ -99,7 +99,7 @@ int complementing_types_of_units (LEX_TYPE last_lex, char cur) {
             res = 1;
         break;
     case(VAR):
-        if (cur == 'o' || cur == '-')
+        if (cur == 'b' || cur == 'o' || cur == '-')
             res = 1;
         break;
     }
@@ -151,7 +151,7 @@ char* add_elem_to_array(char* arr, int size, char elem, int* flag) {
 }
 
 FUNK check_functions(char* func, int* flag) {
-    FUNK res;
+    FUNK res = SIN;
     if (strcmp(func, "sin") == 0)
         res = SIN;
     else if (strcmp(func, "cos") == 0)

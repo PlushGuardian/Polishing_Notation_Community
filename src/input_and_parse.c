@@ -3,6 +3,7 @@
 #include "stack_and_struct.h"  // OPERATIONS WITH STRUCTURES
 #include "input_and_parse.h"  
 #include "parsing_supplement.h"  // COMPARING CHARACTERS IN PARSING
+#include "output_supplement.h"
 
 // THIS FUNCTION READS A STRING FROM STDIN AND DELETES ALL SPACES IN IT.
 // IF THERE WERE ANY NYMBERS SEPARATED BY SPACE, IT WILL RETURN 0.
@@ -15,7 +16,7 @@ char* input_string(int *flag) {
         *flag = -1;
         ch = '\n';
     }
-    int size = 0, new_space_flag = 0, old_space_flag = 0;
+    int size = 0, new_space_flag = 0, old_space_flag;
     int last_is_number = 0, cur_is_number = 0;
     while (ch != '\n') {
         if (ch != ' ') {
@@ -23,7 +24,6 @@ char* input_string(int *flag) {
             new_space_flag = 0;
             res_str[size] = ch;
             size++;
-            
             char* temp = realloc(res_str, sizeof(char) * (size + 1));
             if (temp == NULL) {
                 free(temp);
@@ -48,13 +48,15 @@ char* input_string(int *flag) {
 
 
 int parse(char* str, lex** queue) {
-    char cur_type, *num = (char*)malloc(sizeof(char));
+    char *num = (char*)malloc(sizeof(char));
     int i = 0, res = 1, len = 0, br_count = 0;
     LEX_TYPE last_lex = START, cur_lex;
     while (str[i] != '\0' && res == 1) {
-        cur_type = check_for_symbol(str[i]);
+        char cur_type = check_for_symbol(str[i]);
         res = res * complementing_types_of_units(last_lex, cur_type);
         cur_lex = determine_current_type(cur_type);
+        if (cur_lex == VAR)
+            push_lex(queue, X, 1, &res);
         if (cur_lex == NUMBER || cur_lex == FUNCTION) {
             num = add_elem_to_array(num, len, str[i], &res);
             len++;
@@ -91,8 +93,8 @@ int parse(char* str, lex** queue) {
         }
         if (cur_lex == OPERATOR)
             push_lex(queue, OP, to_funk(str[i]), &res);
-        if (cur_lex == VAR)
-            push_lex(queue, OP, X, &res);
+        if (cur_lex == VAR) 
+            push_lex(queue, X, 1, &res);
         if (cur_lex == MINUS) {
             FUNK minus_type = check_minus(last_lex);
             push_lex(queue, OP, minus_type, &res);

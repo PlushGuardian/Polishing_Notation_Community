@@ -12,7 +12,10 @@ int main()
     // string test
     int flag = 1;
     char * str = input_string(&flag);
-    printf("string: %s\n" , str);
+    header();
+
+
+    // printf("string: %s\n" , str);
     if (flag != 1)
         printf("your input is shit\n");
     if (flag == -1)
@@ -26,14 +29,14 @@ int main()
     if (res == - 1)
         printf("oh no, we have problems with memory");
     flag = reverse_stack(&lexem, &reversed);
-    printf("------this is reversed\n");
-    print_struct(reversed);
+    // printf("------this is reversed\n");
+    // print_struct(reversed);
     lexem = Reverse_RPN(reversed);
-    printf("------this is after polish\n");
-    print_struct(lexem);
-    double rara;
-    calculate(lexem, &rara, 1);
-    printf("result %lf\n", rara) ;
+    // printf("------this is after polish\n");
+    // print_struct(lexem);
+    // double rara;
+    // calculate(lexem, &rara, 1);
+    // printf("result %lf\n", rara) ;
     output(lexem);
     double result;
     flag = flag * calculate(lexem, &result, 1);

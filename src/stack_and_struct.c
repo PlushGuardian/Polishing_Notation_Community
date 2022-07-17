@@ -54,7 +54,7 @@ void push_lex(lex** root, TYPE type, double data, int *flag) {
             new_elem->elem.num = data;
         else if (type == OP)
             new_elem->elem.func = data;
-        else 
+        else if (type == X)
             new_elem->elem.is_x = data;    
         new_elem->next = *root;
         *root = new_elem;
@@ -68,25 +68,6 @@ void pop_lex(lex** root) {
         *root = (*root)->next;
         free(temp);
     }
-}
-
-lex* slide_lex(lex* elem, TYPE type, double data, int *flag) {
-    printf("we have trouble");
-    lex* new_elem = (lex *)malloc(sizeof(lex));
-    printf("we have trouble");
-    if (new_elem != NULL) {
-        new_elem->next = NULL;
-        elem->next = new_elem;
-        new_elem->type = type;
-        if (type == NUM) 
-            new_elem->elem.num = data;
-        if (type == OP) 
-            new_elem->elem.func = data;
-    } else {
-        *flag = -1;
-        printf("we have trouble");
-    }
-    return new_elem;
 }
 
 int reverse_stack(lex** old, lex** new) {
@@ -107,7 +88,6 @@ int reverse_stack(lex** old, lex** new) {
                 FOR POLISH NOTATION
 ---------------------------------------------------------*/
 
-// занести в окончательный результат из стека
 void add_to_output_from_stack(struct stack_for_output **root, double item) {
     struct stack_for_output *temp;
     temp = (struct stack_for_output*)malloc(sizeof(struct stack_for_output));
@@ -155,26 +135,13 @@ void push_to_stack(struct stack_for_OP **root, double item) {
 
 // переделать из стека в список
 struct lexical_units* copy_to_lex(struct stack_for_output *Output_RPN) {
-    struct lexical_units *temp_lex;
+    struct lexical_units *temp_lex = 0;
     struct stack_for_output *temp_RPN;
 
     temp_RPN = Output_RPN;
 
-    temp_lex = (struct lexical_units*)malloc(sizeof(struct lexical_units));
-    if (Output_RPN->type == 1) {
-        temp_lex->type = 1;
-        temp_lex->elem.func = Output_RPN->func;
-    }
-    if (Output_RPN->type == 0) {
-        temp_lex->type = 0;
-        temp_lex->elem.num = Output_RPN->num;
-    }
-    if (Output_RPN->type == 3) {
-        temp_lex->type = 3;
-        temp_lex->elem.is_x = 1;
-    }
-    temp_RPN = temp_RPN->prev;
-    
+    //temp_lex = (struct lexical_units*)malloc(sizeof(struct lexical_units));
+ 
     while (temp_RPN) {
         add_to_struct(&temp_lex, temp_RPN);
         temp_RPN = temp_RPN->prev;
@@ -196,7 +163,12 @@ void add_to_struct(struct lexical_units **root, struct stack_for_output *Output_
         temp_lex->type = 0;
         temp_lex->elem.num = Output_RPN->num;
     }
+    if (Output_RPN->type == 3) {
+        temp_lex->type = 3;
+        temp_lex->elem.is_x = 1;
+    }
     
     temp_lex->next = *root;  // next тут prev
     *root = temp_lex;
 }
+
