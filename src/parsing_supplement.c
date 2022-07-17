@@ -69,9 +69,6 @@ char check_for_symbol(char ch) {
 
 int complementing_types_of_units (LEX_TYPE last_lex, char cur) {
     int res = 0;
-    // printf("    input: last_lex ");
-    // output_of_lex_type(last_lex);
-    // printf(" char %c\n", cur);
     switch (last_lex) {
     case(START):
         if (cur == 'B' || cur == 'n' || cur == 'l' || cur == '-' || cur == 'x')

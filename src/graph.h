@@ -2,7 +2,7 @@
 #define SRC_GRAPH_H_
 typedef enum TYPE_N {
     NUM,
-    OP
+    OP,
 }TYPE;
 
 typedef enum FUNK_N {

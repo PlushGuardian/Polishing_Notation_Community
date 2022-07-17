@@ -15,11 +15,11 @@ int main()
         printf("your input is shit\n");
     if (flag == -1)
         printf("oh no, we have problems with memory");
-    
-    lex* lexem = malloc(sizeof(lex));
+    // printf("flag %d", flag);
+    lex* lexem;
     lex* start = lexem;
     int res = parse(str, &lexem) ;
-    if (res!= 1)
+    if (res != 1)
         printf("your input is awful\n");
     if (res == - 1)
         printf("oh no, we have problems with memory");

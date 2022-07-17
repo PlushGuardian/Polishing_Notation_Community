@@ -20,6 +20,7 @@ struct lexical_units {
     union {
         FUNK func;
         int num;
+        int is_x;
     } elem;
 } ;
 typedef struct lexical_units lex;
@@ -28,5 +29,8 @@ void push_lex(lex** root, TYPE type, double data, int *flag);
 lex* new_node_funk(FUNK data);
 lex* new_node_num(double data);
 void pop_lex(lex** root); 
+lex* slide_lex(lex* last, TYPE type, double data, int *flag);
+
+lex* new_node_lex();
 
 #endif  // SRC_STACK_H_

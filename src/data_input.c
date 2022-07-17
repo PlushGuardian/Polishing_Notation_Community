@@ -47,53 +47,46 @@ char* input_string(int *flag) {
 
 int parse(char* str, lex** queue) {
     // lex* last = *queue;
-    char cur_type;
-    int i = 0, res = 1;
-    char* number = (char*)malloc(sizeof(char)); 
-    char* func = (char*)malloc(sizeof(char)); 
-    int num_len = 0, func_len = 0;
-    int left_br_count = 0, right_br_count = 0;
+    char cur_type, *num = (char*)malloc(sizeof(char));
+    int i = 0, res = 1, len = 0, br_count = 0;
+    
     LEX_TYPE last_lex = START, cur_lex;
     while (str[i] != '\0' && res == 1) {
         cur_type = check_for_symbol(str[i]);
         res = res * complementing_types_of_units(last_lex, cur_type);
-        printf("complementing units: %d\n", complementing_types_of_units(last_lex, cur_type));
+        printf("complementing types of units: %d\n", complementing_types_of_units(last_lex, cur_type));
         cur_lex = determine_current_type(cur_type);
-        if (cur_lex == NUMBER) {
-            number = add_elem_to_array(number, num_len, str[i], &res);
-            num_len++;
-        }
-        if (cur_lex == FUNCTION) {
-            func = add_elem_to_array(func, func_len, str[i], &res);
-            num_len++;
+        if (cur_lex == NUMBER || cur_lex == FUNCTION) {
+            num = add_elem_to_array(num, len, str[i], &res);
+            len++;
         }
         if ((last_lex == NUMBER && cur_lex != NUMBER) || (cur_lex == NUMBER && str[i+1] == '\0')) {
-            push_lex(queue, NUM, atoi(number), &res);
-            printf("atoi number %d\n", atoi(number));
-            free(number);
-            number = (char*)malloc(sizeof(char));
-            num_len = 0;
+            push_lex(queue, NUM, atoi(num), &res);
+            free(num);
+            num = (char*)malloc(sizeof(char)); 
+            len = 0;
         }
         if (last_lex == FUNCTION && cur_lex != FUNCTION) {
-            FUNK cur_function = check_functions(func, &res);
+            FUNK cur_function = check_functions(num, &res);
+            output_of_func (cur_function);
             if (res != 0)
                 push_lex(queue, OP, cur_function, &res);
-            free(func);
-            func = (char*)malloc(sizeof(char)); 
-            func_len = 0;
+            free(num);
+            num = (char*)malloc(sizeof(char)); 
+            len = 0;
         }
+        
         if (cur_lex == L_BRACKET) {
-            push_lex(queue, OP, L_BRACKET, &res);
-            left_br_count++;
+            push_lex(queue, OP, L_BRACK, &res);
+            br_count--;
         }
             
         if (cur_lex == R_BRACKET) {
-            push_lex(queue, OP, R_BRACKET, &res);
-            right_br_count++;
+            push_lex(queue, OP, R_BRACK, &res);
+            br_count++;
         }
-            
         if (cur_lex == OPERATOR)
-            push_lex(queue, OP, OPERATOR, &res);
+            push_lex(queue, OP, to_funk(str[i]), &res);
         if (cur_lex == X)
             push_lex(queue, OP, X, &res);
         if (cur_lex == MINUS) {
@@ -103,12 +96,34 @@ int parse(char* str, lex** queue) {
         last_lex = cur_lex;
         i++;
     }
-    if (number != NULL)
-        free(number);
-    if (func != NULL)
-        free(func);
-    if (left_br_count != right_br_count)
+    if (num != NULL)
+        free(num);
+    if (br_count != 0)
         res = 0;
+    return res;
+}
+
+void restart_array(char** arr, int* len) {
+    free(arr);
+    *arr = (char*)malloc(sizeof(char)); 
+    *len = 0;
+}
+
+FUNK to_funk(char cur){
+    FUNK res;
+    switch (cur) {
+        case '+':
+        res = ADD;
+        break;
+        case '*':
+        res = MULTI;
+        break;
+        case '/':
+        res = DIVIDE;
+        break;
+    }
+    output_of_func(res);
+    printf(" here is an output of to_funk\n");
     return res;
 }
 
@@ -127,6 +142,22 @@ void print_struct(lex* root) {
             printf("\n");
         }
         root = root->next;
+    }
+}
+
+
+
+void print_one_node(lex* root) {
+    printf("Element:\n");
+    printf("    Type ");
+    output_of_type(root->type);
+    printf("\n");
+    if(root->type == 0)
+        printf("    Number %d\n", root->elem.num);
+    else{
+        printf("    Function %d\n", root->elem.func);
+        output_of_func( root->elem.func);
+        printf("\n");
     }
 }
 

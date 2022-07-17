@@ -53,19 +53,37 @@ lex* new_node_num(double data) {
     return new_elem;
 }
 
+lex* new_node_lex() {
+    lex* new_elem = (lex*)malloc(sizeof(lex));
+    new_elem->next = NULL;
+    return new_elem;
+}
+
 void push_lex(lex** root, TYPE type, double data, int *flag) {
-    lex* new_elem;
-    if (type == NUM)
-        new_elem = new_node_num(data);
-    else
-        new_elem = new_node_funk(data);
+    lex* new_elem = new_node_lex();
+    // if (type == NUM) {
+    //     new_elem = new_node_num(data);
+    //     new_elem->type = NUM;
+    // } else if (type == OP) {
+    //     new_elem = new_node_funk(data);
+    //     new_elem->type = OP;
+    // }
     if (new_elem == NULL) {
-            *flag = -1;
-            free(new_elem);
-        }
-    new_elem->next = *root;
-    data = data*1;
-    *root = new_elem;
+        *flag = -1;
+        free(new_elem);
+    } else {
+        if (type == NUM) {
+            new_elem->elem.num = data;
+            new_elem->type = NUM;
+        } else if (type == OP) {
+            new_elem->elem.func = data;
+            new_elem->type = OP;
+        }   
+        new_elem->next = *root;
+        data = data*1;
+        *root = new_elem;
+    }
+    
 }
 
 void pop_lex(lex** root) {
@@ -76,4 +94,38 @@ void pop_lex(lex** root) {
     }
 }
 
+lex* slide_lex(lex* last, TYPE type, double data, int *flag) {
+    lex* new_elem = new_node_lex();
+    if (new_elem == NULL) {
+        *flag = -1;
+        free(new_elem);
+    } else {
+        if (type == NUM) {
+            new_elem->elem.num = data;
+            new_elem->type = NUM;
+        } else if (type == OP) {
+            new_elem->elem.func = data;
+            new_elem->type = OP;
+        }   
+        last->next = new_elem;
+        last = new_elem;
+    }
+    return last;
+    // lex* new_elem;
+    // if (type == NUM) {
+    //     new_elem = new_node_num(data);
+    //     new_elem->type = NUM;
+    // } else if (type == OP) {
+    //     new_elem = new_node_funk(data);
+    //     new_elem->type = OP;
+    // }
+    // if (new_elem == NULL) {
+    //         *flag = -1;
+    //         free(new_elem);
+    //     }
+    // data = data*1;
+    // last->next = new_elem;
+    // last = last->next;
+    // return last;
+}
 
