@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "graph.h"
 #include "stack_and_struct.h"
 #include "input_and_parse.h" 
 #include "parsing_supplement.h"
+#include "output_supplement.h"
 #include "calculation.h"
 #include "RPN.h"
 
