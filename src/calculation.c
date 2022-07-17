@@ -1,23 +1,27 @@
-#include "functions.h"
-#include "stack.h"
-#include "graph.h"
+#include "calculation.h"
+#include "stack_and_struct.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-int calculate(lex* queue, double *res) {
+int calculate(lex* queue, double *res, double x) {
     int flag = 1;
+    x = x*1;
     stack* nums;
     while (queue) {
         if (queue->type == NUM) {
             push(&nums, queue->elem.num);
-            pop_lex(&queue);
-        } else {
+            
+        } else if (queue->type == OP) {
             *res = operations(&nums, queue->elem.func, &flag);
+            if (flag == 0) 
+                break;
             push(&nums, *res);
+        } else {
+           
+            push(&nums, x);
         }
-        if (flag == 0) 
-            break;
+        pop_lex(&queue);
     }
     return flag;
 }
@@ -47,10 +51,10 @@ double operations(stack** nums, FUNK oper, int* flag) {
         res = pop(nums) * pop(nums);
         break;
     case L_BRACK:
-            printf("remove me, im in functions.c in operations");
+        *flag = 0;
         break;
     case R_BRACK:
-            printf("remove me, im in functions.c in operations");
+        *flag = 0;
         break;
     case SIN:
         res = sin(pop(nums));

@@ -1,10 +1,15 @@
 CC = gcc -Wall -Werror -Wextra
 
-build: graph.c stack.o data_input.o parsing_supplement.o
-	$(CC) graph.c  stack.o data_input.o parsing_supplement.o
+
 
 test: test.c
 	$(CC) test.c
+
+output_supplement.o: output_supplement.c
+	$(CC) -c output_supplement.c -o output_supplement.o
+
+RPN.o: RPN.c
+	$(CC) -c RPN.c -o RPN.o
 
 functions.o: functions.c
 	$(CC) -c functions.c -o functions.o
@@ -33,3 +38,6 @@ leaks:
 
 remove_cpplint: CPPLINT.cfg
 	rm CPPLINT.cfg
+
+clean:
+	rm *.o

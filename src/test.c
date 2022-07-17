@@ -53,3 +53,31 @@ int check_for_number(char ch) {
         res = 1;
     return res;
 }
+
+
+
+    // char test_char = '-';
+    // printf("symbol: %c\n", test_char);
+    // printf("check for operator %d\n", check_for_operator(test_char));
+    // printf("check for symbol %c\n", check_for_symbol(test_char));
+    // test_char = '/';
+    // printf("symbol: %c\n", test_char);
+    // printf("check for operator %d\n", check_for_operator(test_char));
+    // printf("check for symbol %c\n", check_for_symbol(test_char));
+    // test_char = '+';
+    // printf("symbol: %c\n", test_char);
+    // printf("check for operator %d\n", check_for_operator(test_char));
+    // printf("check for symbol %c\n", check_for_symbol(test_char));
+
+    
+    // lexem->type = NUM;
+    // lexem->elem.num = 15;
+    // push_lex(&lexem, OP, ADD, &flag);
+    // stack* nums;
+    //     if (lexem->type == NUM) {
+    //         push(&nums, lexem->elem.num);
+    //     }
+    // push (&nums, 5);
+    // push(&nums, 3);
+    // printf("nums data %lf\nlexem %d %d\n",  nums->data, (FUNK)lexem->type, (FUNK)lexem->elem.func);
+    // printf("operations %lf\n", operations(&nums,ADD,&flag));

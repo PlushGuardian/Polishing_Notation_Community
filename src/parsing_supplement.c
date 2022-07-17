@@ -1,7 +1,7 @@
 #include "parsing_supplement.h"
-#include "stack.h"
-#include "graph.h"
-#include "data_input.h"
+#include "output_supplement.h"
+#include "stack_and_struct.h"
+#include "input_and_parse.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,7 +11,7 @@
 /*---------------------------------------------------------
 FUNCTIONS FOR DETERMINING DIFFERENT "TYPES" OF CHARS IN A STRING
 ---------------------------------------------------------*/
-// THIS WHOLE BLOCK WORKS CORRECTLY
+
 int check_for_function_letter(char ch) {
     int res = 0;
     if (ch == 'a' || ch == 'c' || ch == 'g' || ch == 'i' || ch == 'n')
@@ -98,7 +98,7 @@ int complementing_types_of_units (LEX_TYPE last_lex, char cur) {
         if (cur == 'B' || cur == 'b' || cur == 'o' || cur == '-')
             res = 1;
         break;
-    case(X):
+    case(VAR):
         if (cur == 'o' || cur == '-')
             res = 1;
         break;
@@ -128,7 +128,7 @@ LEX_TYPE determine_current_type(char cur) {
         res = MINUS;
         break;
     case 'x':
-        res = X;
+        res = VAR;
         break;
     } 
     return res;

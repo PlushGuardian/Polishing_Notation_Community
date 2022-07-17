@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "graph.h"
-#include "stack.h"
-#include "data_input.h"
+#include "stack_and_struct.h"
+#include "input_and_parse.h" 
 #include "parsing_supplement.h"
+#include "calculation.h"
+#include "RPN.h"
 
 int main()
 {
@@ -17,42 +19,27 @@ int main()
         printf("oh no, we have problems with memory");
     // printf("flag %d", flag);
     lex* lexem;
-    lex* start = lexem;
+    lex* reversed;
     int res = parse(str, &lexem) ;
     if (res != 1)
         printf("your input is awful\n");
     if (res == - 1)
         printf("oh no, we have problems with memory");
+    flag = reverse_stack(&lexem, &reversed);
+    printf("------this is reversed\n");
+    print_struct(reversed);
+    lexem = Reverse_RPN(reversed);
+    printf("------this is after polish\n");
+    print_struct(lexem);
+    double rara;
+    calculate(lexem, &rara, 1);
+    printf("result %lf\n", rara) ;
 
-    
-    print_struct(start);
-
+    double result;
+    flag = flag * calculate(lexem, &result, 1);
+    printf("calculate %lf", result);
     free(str);
-    free(lexem);
+    free(reversed);
 }
 
-    // char test_char = '-';
-    // printf("symbol: %c\n", test_char);
-    // printf("check for operator %d\n", check_for_operator(test_char));
-    // printf("check for symbol %c\n", check_for_symbol(test_char));
-    // test_char = '/';
-    // printf("symbol: %c\n", test_char);
-    // printf("check for operator %d\n", check_for_operator(test_char));
-    // printf("check for symbol %c\n", check_for_symbol(test_char));
-    // test_char = '+';
-    // printf("symbol: %c\n", test_char);
-    // printf("check for operator %d\n", check_for_operator(test_char));
-    // printf("check for symbol %c\n", check_for_symbol(test_char));
 
-    
-    // lexem->type = NUM;
-    // lexem->elem.num = 15;
-    // push_lex(&lexem, OP, ADD, &flag);
-    // stack* nums;
-    //     if (lexem->type == NUM) {
-    //         push(&nums, lexem->elem.num);
-    //     }
-    // push (&nums, 5);
-    // push(&nums, 3);
-    // printf("nums data %lf\nlexem %d %d\n",  nums->data, (FUNK)lexem->type, (FUNK)lexem->elem.func);
-    // printf("operations %lf\n", operations(&nums,ADD,&flag));

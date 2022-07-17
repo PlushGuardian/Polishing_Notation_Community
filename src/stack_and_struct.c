@@ -1,9 +1,8 @@
-#include "stack.h"
+#include "stack_and_struct.h"
 #include <stdio.h>
 #include <stdlib.h>
-//#include "functions.h"
 #include "graph.h"
-#include "data_input.h"
+#include "input_and_parse.h" 
 
 /*---------------------------------------------------------
 OPERATIONS FOR WORKING WITH STACK (USED IN CALCULATION FOR NUMBERS)
@@ -39,20 +38,6 @@ double pop(stack** root) {
 OPERATIONS FOR WORKING WITH STRUCTURE (QUEUE OF OPERANDS AND OPERATIONS)
 ---------------------------------------------------------*/
 
-lex* new_node_funk(FUNK data) {
-    lex* new_elem = (lex*)malloc(sizeof(lex));
-    new_elem->elem.func = data;
-    new_elem->next = NULL;
-    return new_elem;
-}
-
-lex* new_node_num(double data) {
-    lex* new_elem = (lex*)malloc(sizeof(lex));
-    new_elem->elem.num = data;
-    new_elem->next = NULL;
-    return new_elem;
-}
-
 lex* new_node_lex() {
     lex* new_elem = (lex*)malloc(sizeof(lex));
     new_elem->next = NULL;
@@ -61,26 +46,18 @@ lex* new_node_lex() {
 
 void push_lex(lex** root, TYPE type, double data, int *flag) {
     lex* new_elem = new_node_lex();
-    // if (type == NUM) {
-    //     new_elem = new_node_num(data);
-    //     new_elem->type = NUM;
-    // } else if (type == OP) {
-    //     new_elem = new_node_funk(data);
-    //     new_elem->type = OP;
-    // }
     if (new_elem == NULL) {
         *flag = -1;
         free(new_elem);
     } else {
-        if (type == NUM) {
+        new_elem->type = type;
+        if (type == NUM)
             new_elem->elem.num = data;
-            new_elem->type = NUM;
-        } else if (type == OP) {
+        else if (type == OP)
             new_elem->elem.func = data;
-            new_elem->type = OP;
-        }   
+        else 
+            new_elem->elem.is_x = data;    
         new_elem->next = *root;
-        data = data*1;
         *root = new_elem;
     }
     
@@ -94,38 +71,35 @@ void pop_lex(lex** root) {
     }
 }
 
-lex* slide_lex(lex* last, TYPE type, double data, int *flag) {
-    lex* new_elem = new_node_lex();
-    if (new_elem == NULL) {
-        *flag = -1;
-        free(new_elem);
-    } else {
-        if (type == NUM) {
+lex* slide_lex(lex* elem, TYPE type, double data, int *flag) {
+    printf("we have trouble");
+    lex* new_elem = (lex *)malloc(sizeof(lex));
+    printf("we have trouble");
+    if (new_elem != NULL) {
+        new_elem->next = NULL;
+        elem->next = new_elem;
+        new_elem->type = type;
+        if (type == NUM) 
             new_elem->elem.num = data;
-            new_elem->type = NUM;
-        } else if (type == OP) {
+        if (type == OP) 
             new_elem->elem.func = data;
-            new_elem->type = OP;
-        }   
-        last->next = new_elem;
-        last = new_elem;
+    } else {
+        *flag = -1;
+        printf("we have trouble");
     }
-    return last;
-    // lex* new_elem;
-    // if (type == NUM) {
-    //     new_elem = new_node_num(data);
-    //     new_elem->type = NUM;
-    // } else if (type == OP) {
-    //     new_elem = new_node_funk(data);
-    //     new_elem->type = OP;
-    // }
-    // if (new_elem == NULL) {
-    //         *flag = -1;
-    //         free(new_elem);
-    //     }
-    // data = data*1;
-    // last->next = new_elem;
-    // last = last->next;
-    // return last;
+    return new_elem;
 }
 
+int reverse_stack(lex** old, lex** new) {
+    int res = 1;
+    while(*old && res) {
+        if ((*old)->type == NUM)
+            push_lex(new,(*old)->type,(*old)->elem.num, &res);
+        if ((*old)->type == OP)
+            push_lex(new,(*old)->type,(*old)->elem.func, &res);
+        if ((*old)->type == X)
+            push_lex(new,(*old)->type,(*old)->elem.is_x, &res);
+        pop_lex(old);
+    }
+    return res;
+}

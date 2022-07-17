@@ -1,7 +1,7 @@
 #ifndef SRC_TYPES_OF_LEXEMA_H_
 #define SRC_TYPES_OF_LEXEMA_H_
 
-#include "graph.h"
+#include "stack_and_struct.h"
 
 // FUNCTIONS FOR DETERMINING DIFFERENT "TYPES" OF CHARS IN A STRING
 int check_for_function_letter(char ch);
