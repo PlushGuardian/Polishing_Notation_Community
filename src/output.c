@@ -1,26 +1,37 @@
 #include <stdio.h>
 #include <math.h>
 
+//int calculate(lex* queue, double *res);
 
-
+double imputable_function(double x) {
+   x = sin(cos(2 * x));
+   //x = sin(x);
+   //x = cos(x);
+    //x = tan(x);
+    //x = log(x);
+   //x = x;
+  
+  return x; 
+} 
 
 int main() //поле 25 на 80 точек
  {
-    int disper_round = 12; 
+    double OPR_FUNK =M_PI * 4 ;//преобразование для условия задачи
+    int disper_round = 12; // дополнительное округление для эроунд
     char Natur = '*';
     char Speace = '.';
-  //if(calculate!=0) 
-    for(double y = -1.0 ; y <= 1.0 ; y += 0.08) 
-  { //80 клеток ввысоту
-       for(double x = 0; x < (M_PI * 4) ; x += (M_PI * 4) / 80 ) // 25 клеток в ширену // преобразование области определения 4 пи
+
+    
+ 
+    for(double y = -1.0 ; y <= 1.0 ; y += 0.08) //
+  { 
+       for(double x = 0; x < OPR_FUNK ; x += OPR_FUNK / 79 ) // Тут происходит преобразование
     {
-      if(round(sin(cos(2*x))*disper_round)/disper_round == round(y*disper_round)/disper_round) //образующая функция в ифе проверяет существование функции в зависимости от значения  х и у
-     
-      printf("%c", Natur);
-      else
-        { 
+      if (round(imputable_function(x) * disper_round) / disper_round == round(y * disper_round)/disper_round) {
+          printf("%c", Natur);
+      } else { 
           printf("%c", Speace);
-        }
+      }
        
      }   
   
@@ -31,5 +42,23 @@ int main() //поле 25 на 80 точек
    //{
     //printf("n/a");
    //}
-   //printf("%f\n",round((M_PI * 4.0)*100)/100);//промежут по оси х должен быть поделен 80 сигментов// потом для каждого икса считаю игрики по функции введенной пользователем// 4 умножить на пи == 
+   
 }
+
+
+/*int calculate(lex* queue, double *res) {
+    int flag = 1;
+    stack* nums;
+    while (queue) {
+        if (queue->type == NUM) {
+            push(&nums, queue->elem.num);
+            pop_lex(&queue);
+        } else {
+            *res = operations(&nums, queue->elem.func, &flag);
+            push(&nums, *res);
+        }
+        if (flag == 0) 
+            break;
+    }
+    return flag;
+}*/
