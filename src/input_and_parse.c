@@ -10,12 +10,13 @@
 char* input_string(int *flag) {
     char ch;
     scanf("%c", &ch);
-    char* res_str = (char*)malloc(sizeof(char));
+    char* res_str = calloc(1,sizeof(char));
     if (res_str == NULL) {
         free(res_str);
         *flag = -1;
         ch = '\n';
     }
+
     int size = 0, new_space_flag = 0, old_space_flag;
     int last_is_number = 0, cur_is_number = 0;
     while (ch != '\n') {
@@ -46,22 +47,35 @@ char* input_string(int *flag) {
     return res_str;
 }
 
-
+/* THIS FUNCTION CHECKS WHETHER THE INPUT STRING IS AN ACTUAL EQUATION TO BE SOLVED.
+IT CHECKS THE STRING AFTER INPUT_STRING() SYMBOL BY SYMBOL AND CHECKS, WHETHER THE 
+CURRENT SYMBOL (CUR_SYM) IS "COMPLEMENTARY" TO THE ONE BEFORE IT (PREV_SYM) OR NOT. FOR 
+EXAMPLE, YOU CANNOT HAVE AN OPENING BRACKET AFTER A NUMBER, BUT YOU CAN HAVE A CLOSING 
+ONE, SO THE FORMER ONE IS NOT COMPLEMENTARY AND THE LATTER ONE IS.
+tHE RESULTING SYMBOLS ARE PUT IN A LIST OF STRUCTURES.
+NUMBERS AND FUNCTION NAMES ARE STORED TEMPORARILY IN AN ARRAY, AND WHEN THEY END, THEY 
+ARE PUT INTO THE FINAL LIST OF STRUCTURES.
+THERE IS ALSO A CHECK THAT THE NUMBER OF CLOSING BRACKETS IS EQUAL TO THE NUMBER OF 
+OPENING ONES.
+PARSING SUPPLEMENT CONTAINS ALL THE COMPARISONS BETWEEN SYMBOLS.
+*/
 int parse(char* str, lex** queue) {
-    char *num = (char*)malloc(sizeof(char));
+    char *num = calloc(1, sizeof(char));
     int i = 0, res = 1, len = 0, br_count = 0;
-    LEX_TYPE last_lex = START, cur_lex;
+    if (num == NULL)
+        res = 0;
+    LEX_TYPE prev_sym = START, cur_sym;
     while (str[i] != '\0' && res == 1) {
         char cur_type = check_for_symbol(str[i]);
-        res = res * complementing_types_of_units(last_lex, cur_type);
-        cur_lex = determine_current_type(cur_type);
-        if (cur_lex == VAR)
+        res = res * complementing_types_of_units(prev_sym, cur_type);
+        cur_sym = determine_current_type(cur_type);
+        if (cur_sym == VAR)
             push_lex(queue, X, 1, &res);
-        if (cur_lex == NUMBER || cur_lex == FUNCTION) {
+        if (cur_sym == NUMBER || cur_sym == FUNCTION) {
             num = add_elem_to_array(num, len, str[i], &res);
             len++;
         }
-        if ((last_lex == NUMBER && cur_lex != NUMBER) || (cur_lex == NUMBER && str[i+1] == '\0')) {
+        if ((prev_sym == NUMBER && cur_sym != NUMBER) || (cur_sym == NUMBER && str[i+1] == '\0')) {
             push_lex(queue, NUM, atoi(num), &res);
             free(num);
             num = (char*)calloc(1, sizeof(char));
@@ -71,7 +85,7 @@ int parse(char* str, lex** queue) {
             }
             len = 0;
         }
-        if (last_lex == FUNCTION && cur_lex != FUNCTION) {
+        if (prev_sym == FUNCTION && cur_sym != FUNCTION) {
             FUNK cur_function = check_functions(num, &res);
             if (res != 0)
                 push_lex(queue, OP, cur_function, &res);
@@ -83,26 +97,26 @@ int parse(char* str, lex** queue) {
             }
             len = 0;
         }
-        if (cur_lex == L_BRACKET) {
+        if (cur_sym == L_BRACKET) {
             push_lex(queue, OP, L_BRACK, &res);
             br_count--;
-        }   
-        if (cur_lex == R_BRACKET) {
+        } 
+        if (cur_sym == R_BRACKET) {
             push_lex(queue, OP, R_BRACK, &res);
             br_count++;
         }
-        if (cur_lex == OPERATOR)
+        if (cur_sym == OPERATOR)
             push_lex(queue, OP, to_funk(str[i]), &res);
-        if (cur_lex == VAR) 
+        if (cur_sym == VAR) 
             push_lex(queue, X, 1, &res);
-        if (cur_lex == MINUS) {
-            FUNK minus_type = check_minus(last_lex);
+        if (cur_sym == MINUS) {
+            FUNK minus_type = check_minus(prev_sym);
             push_lex(queue, OP, minus_type, &res);
         }
-        last_lex = cur_lex;
+        prev_sym = cur_sym;
         i++;
     }
-    if (num != NULL)
+    if (num != NULL) 
         free(num);
     if (br_count != 0)
         res = 0;

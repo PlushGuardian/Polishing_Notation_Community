@@ -70,16 +70,27 @@ void pop_lex(lex** root) {
     }
 }
 
-int reverse_stack(lex** old, lex** new) {
+int reverse_stack(lex** old, lex** new_) {
     int res = 1;
-    while(*old && res) {
+    int check = 1;
+    // the problem is in the structure of the stack!
+    printf("addr %i\n", (int)((*old)== NULL)); 
+    while(check && res) {
+        printf("here 1\n");
         if ((*old)->type == NUM)
-            push_lex(new,(*old)->type,(*old)->elem.num, &res);
+            push_lex(new_,(*old)->type,(*old)->elem.num, &res);
+        printf("bruh 1\n");
         if ((*old)->type == OP)
-            push_lex(new,(*old)->type,(*old)->elem.func, &res);
+            push_lex(new_,(*old)->type,(*old)->elem.func, &res);
+        printf("bruh 2\n");
         if ((*old)->type == X)
-            push_lex(new,(*old)->type,(*old)->elem.is_x, &res);
+            push_lex(new_,(*old)->type,(*old)->elem.is_x, &res);
+        printf("here 2\n");
+        if ((*old)->next == NULL)
+            check = 0;
+        printf("CHECK %d\n", check);
         pop_lex(old);
+        printf("here 3\n");
     }
     return res;
 }

@@ -62,7 +62,7 @@ void push_lex(lex** root, TYPE type, double data, int *flag);
 void pop_lex(lex** root); 
 lex* new_node_lex();
 lex* slide_lex(lex* elem, TYPE type, double data, int *flag);
-int reverse_stack(lex** old, lex** new);
+int reverse_stack(lex** old, lex** new_);
 
 
 

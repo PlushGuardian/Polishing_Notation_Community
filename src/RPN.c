@@ -26,7 +26,6 @@ struct lexical_units *Reverse_RPN(struct lexical_units *input) {
                 break;
             case OP:
                 RPN_op(temp_output, &stack, &Output_RPN, &flag);
-                
                 break;
             case X:
                 

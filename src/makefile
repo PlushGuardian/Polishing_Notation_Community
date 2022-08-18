@@ -1,11 +1,12 @@
 CC = gcc -Wall -Werror -Wextra
 TARGET = ../build
+TARGET_NAME = graph
 
-all: graph.c input_and_parse.o RPN.o calculation.o stack_and_struct.a parsing_supplement.o output_supplement.o output.o
-	$(CC) graph.c input_and_parse.o RPN.o calculation.o stack_and_struct.a parsing_supplement.o output_supplement.o output.o -o $(TARGET)/graph
+build: graph.c input_and_parse.o RPN.o calculation.o stack_and_struct.a parsing_supplement.o output_supplement.o output.o
+	$(CC) graph.c input_and_parse.o RPN.o calculation.o stack_and_struct.a parsing_supplement.o output_supplement.o output.o -o $(TARGET)/$(TARGET_NAME) -lm
 
-run: $(TARGET)/graph
-	./$(TARGET)/graph
+run: $(TARGET)/$(TARGET_NAME)
+	./$(TARGET)/$(TARGET_NAME)
 
 test: test.c
 	$(CC) test.c
@@ -55,5 +56,6 @@ add_cpplint: ../materials/linters/CPPLINT.cfg
 	cp ../materials/linters/CPPLINT.cfg CPPLINT.cfg
 
 clean:
-	rm *.o
-	rm *.a
+	rm -f $(TARGET)/$(TARGET_NAME)
+	rm -f *.o
+	rm -f *.a

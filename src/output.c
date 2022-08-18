@@ -1,21 +1,11 @@
 #include "calculation.h"
 #include "stack_and_struct.h"
 #include "output_supplement.h"
-#include <stdio.h>
+#include "output.h"
 #include <math.h>
+#include <stdio.h>
 
-//int calculate(lex* queue, double *res);
 
-// double imputable_function(double x) {
-//    x = sin(cos(2 * x));
-//    //x = sin(x);
-//    //x = cos(x);
-//     //x = tan(x);
-//     //x = log(x);
-//    //x = x;
-  
-//   return x; 
-// } 
 void header() {
     printf("Добро пожаловать! Если вам нужно вывести график вашей функции, вы обратились по адресу!\n");
     printf("    Перед вами алгоритм, высчитывающий значения с помощью обратной польской нотации!   \n");
