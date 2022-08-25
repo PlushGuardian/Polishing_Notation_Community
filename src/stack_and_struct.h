@@ -1,12 +1,6 @@
 #ifndef SRC_STACK_AND_STRUCT_H_
 #define SRC_STACK_AND_STRUCT_H_
 
-typedef enum TYPE_N {
-    NUM,
-    OP,
-    X,
-}TYPE;
-
 typedef enum FUNK_N {
     ADD,
     SUBTR,
@@ -21,6 +15,8 @@ typedef enum FUNK_N {
     CTG,
     SQRT,
     LN,
+    X,
+    NUM,
 }FUNK;
 
 typedef enum TYPE_OF_LAST_LEXEME {
