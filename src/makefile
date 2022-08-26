@@ -8,6 +8,14 @@ build: graph.c input_and_parse.o RPN.o calculation.o stack_and_struct.a parsing_
 run: $(TARGET)/$(TARGET_NAME)
 	./$(TARGET)/$(TARGET_NAME)
 
+RPN: testing_rpn.c RPN_2.o output_supplement.o
+	$(CC) -g testing_rpn.c RPN_2.o output_supplement.o -o $(TARGET)/$(TARGET_NAME) -lm
+
+RPN_2.o: RPN_2.c 
+	$(CC) -c RPN_2.c -o RPN_2.o 
+
+gdb: $(TARGET)/$(TARGET_NAME)
+	gdb -q ./$(TARGET)/$(TARGET_NAME)
 test: test.c
 	$(CC) test.c
 
@@ -47,7 +55,7 @@ cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem *.c
 
 leaks:
-	leaks -atExit -- ../build/./polish_notation
+	valgrind --leak-check=yes $(TARGET)/./$(TARGET_NAME)
 
 remove_cpplint: CPPLINT.cfg
 	rm CPPLINT.cfg

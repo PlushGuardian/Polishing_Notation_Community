@@ -8,34 +8,22 @@ void print_struct(lex* root) {
     int i = 0;
     while (root != NULL) {
         printf("Element %d:\n", i);
-        printf("    Type ");
-        output_of_type(root->type);
+        print_one_node(root);
+        // printf("address of next = %p\n", root->next);
         printf("\n");
-        if(root->type == NUM)
-            printf("    Number %lf\n", root->elem.num);
-        else {
-            printf("    Function ");
-            output_of_func( root->elem.func);
-            printf("\n");
-        }
         root = root->next;
         i++;
     }
 }
 
 void print_one_node(lex* root) {
-    printf("Element:\n");
-    printf("    Type ");
-    output_of_type(root->type);
-    printf("\n");
-    if (root->type == 0) {
-        printf("    Number %lf\n", root->elem.num);
-    } else if (root->type == 1) {
-        printf("    Function %d\n", root->elem.func);
-        output_of_func(root->elem.func);
+    if (root->func == NUM) {
+        printf("   %lf\n", root->num);
+    }
+    else {
+        printf("   ");
+        output_of_func(root->func);
         printf("\n");
-    } else {
-        printf("    Variable %d\n", (int)root->elem.is_x);
     }
 
 }
@@ -79,6 +67,9 @@ void output_of_lex_type(int num) {
         break;
         case 7:
         printf("VAR");
+        break;
+        case 8:
+        printf("X");
         break;
     }
 }
