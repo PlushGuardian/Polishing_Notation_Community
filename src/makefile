@@ -16,6 +16,10 @@ RPN_2.o: RPN_2.c
 
 gdb: $(TARGET)/$(TARGET_NAME)
 	gdb -q ./$(TARGET)/$(TARGET_NAME)
+
+valgrind: $(TARGET)/$(TARGET_NAME)
+	valgrind --leak-check=full --track-origins=yes ./$(TARGET)/$(TARGET_NAME)
+
 test: test.c
 	$(CC) test.c
 
