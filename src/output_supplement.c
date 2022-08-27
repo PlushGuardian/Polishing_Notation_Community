@@ -10,7 +10,6 @@ void print_struct(lex* root) {
         printf("Element %d:\n", i);
         print_one_node(root);
         // printf("address of next = %p\n", root->next);
-        printf("\n");
         root = root->next;
         i++;
     }

@@ -93,23 +93,18 @@ void RPN_op(
 }
 
 // определение к какой группе принадлежит операнд
-int Precedence(FUNK func) {
+int precedence(FUNK func) {
     int result = -5;
     switch (func) {
-        case ADD:
-        case SUBTR:
-            result = 2;
-            break;
-        case NEGATE:
-        case DIVIDE:
-        case MULTI:
-            result = 3;
+        case NUM:
+        case X:
+            result = -2;
             break;
         case L_BRACK:
-            result = 0;
+            result = -1;
             break;
         case R_BRACK:
-            result = -1;
+            result = 0;
             break;
         case SIN:
         case COS:
@@ -118,6 +113,15 @@ int Precedence(FUNK func) {
         case SQRT:
         case LN:
             result = 1;
+            break;
+        case ADD:
+        case SUBTR:
+            result = 2;
+            break;
+        case NEGATE:
+        case DIVIDE:
+        case MULTI:
+            result = 3;
             break;
     }
     return result;

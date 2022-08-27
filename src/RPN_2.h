@@ -9,5 +9,6 @@ lex* remove_lex(lex* head, int* flag);
 lex* return_to_head(lex* tail) ;
 lex* shunting_yard(lex* head) ;
 void free_queue(lex** head) ;
+int precedence(FUNK func);
 
 #endif
