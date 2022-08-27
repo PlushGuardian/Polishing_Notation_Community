@@ -44,20 +44,17 @@ double pop(stack** root);
 
 // OPERATIONS FOR WORKING WITH STRUCTURE (QUEUE OF OPERANDS AND OPERATIONS)
 struct lexical_units {
-    TYPE type;
     struct lexical_units* next;
-    union {
-        FUNK func;
-        double num;
-        double is_x;
-    } elem;
+    struct lexical_units* prev;
+    FUNK func;
+    double num;
 } ;
 typedef struct lexical_units lex;
 
-void push_lex(lex** root, TYPE type, double data, int *flag);
+void push_lex(lex** root, double data, int *flag);
 void pop_lex(lex** root); 
 lex* new_node_lex();
-lex* slide_lex(lex* elem, TYPE type, double data, int *flag);
+lex* slide_lex(lex* elem, double data, int *flag);
 int reverse_stack(lex** old, lex** new_);
 
 
@@ -74,7 +71,6 @@ struct flags {
 };
 
 struct stack_for_output {
-    TYPE type;
     double func;
     int num;
     int is_x;
