@@ -2,11 +2,12 @@
 #define POLISH_SRC_PARSING_H_
 
 #include <string.h>
+#include "stack_and_struct.h"
 
 typedef struct tmp_var{
   char string[8];
   int n;
-  int x;
+  char prev;
 }Tmp;
 
 int check_char(char ch);

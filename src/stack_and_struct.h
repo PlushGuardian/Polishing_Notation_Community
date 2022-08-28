@@ -17,6 +17,8 @@ typedef enum FUNK_N {
     LN,
     X,
     NUM,
+    NO_RES,
+    ERR,
 }FUNK;
 
 typedef enum TYPE_OF_LAST_LEXEME {
@@ -42,12 +44,20 @@ stack* new_node(double data);
 void push(stack** root, double data);
 double pop(stack** root);
 
+typedef struct element {
+  FUNK funk;
+  double num;
+} Element;
+
 // OPERATIONS FOR WORKING WITH STRUCTURE (QUEUE OF OPERANDS AND OPERATIONS)
 struct lexical_units {
     struct lexical_units* next;
     struct lexical_units* prev;
+
     FUNK func;
     double num;
+
+    Element unit;
 } ;
 typedef struct lexical_units lex;
 
