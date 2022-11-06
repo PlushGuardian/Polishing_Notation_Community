@@ -2,7 +2,7 @@
 #define POLISH_SRC_PARSING_H_
 
 #include <string.h>
-#include "stack_and_struct.h"
+#include "structures.h"
 
 typedef struct tmp_var{
   char string[8];

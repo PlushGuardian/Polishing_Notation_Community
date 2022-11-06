@@ -51,7 +51,7 @@ typedef struct Element {
 struct lexical_units {
     struct lexical_units* next;
     struct lexical_units* prev;
-    Element unit;
+    elem unit;
 } ;
 typedef struct lexical_units lex;
 
