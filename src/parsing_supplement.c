@@ -67,7 +67,7 @@ char check_for_symbol(char ch) {
     FUNCTIONS FOR COMPARING PREVIOUS AND CURRENT CHARS
 ---------------------------------------------------------*/
 
-int complementing_types_of_units (LEX_TYPE last_lex, char cur) {
+int complementing_types_of_units (TYPE last_lex, char cur) {
     int res = 0;
     switch (last_lex) {
     case(START):
@@ -106,8 +106,8 @@ int complementing_types_of_units (LEX_TYPE last_lex, char cur) {
     return res;
 }
 
-LEX_TYPE determine_current_type(char cur) {
-    LEX_TYPE res;
+TYPE determine_current_type(char cur) {
+    TYPE res;
     switch (cur) {
     case 'B':
         res = L_BRACKET;
@@ -169,7 +169,7 @@ FUNK check_functions(char* func, int* flag) {
     return res;
 }
 
-FUNK check_minus(LEX_TYPE last_lex) {
+FUNK check_minus(TYPE last_lex) {
     FUNK res;
     if (last_lex == L_BRACKET || last_lex == START)
         res = NEGATE;
