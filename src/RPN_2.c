@@ -8,12 +8,12 @@
 // add dot to parsing
 // add ) ( case to parsing
 
-lex* new_lex(FUNK func, double num) {
+lex* new_lex(elem data) {
     lex* new_elem = (lex*)malloc(sizeof(lex));
     if (new_elem != NULL) {
-        new_elem->func = func;
-        if (num != -1)
-            new_elem->num = num;
+        new_elem->unit.func = data.func;
+        if (data.num != -1)
+            new_elem->unit.num = data.num;
         new_elem->next = NULL;
         new_elem->prev = NULL;
     }
@@ -31,10 +31,10 @@ lex* remove_lex(lex* head, int* flag) {
     return head;
 }
 
-lex* add_to_head(lex* head, FUNK func, double num, int* flag) {
-    lex* new_elem = new_lex(func, num);
+lex* add_to_head(lex* head, elem new_unit, int* flag) {
+    lex* new_elem = new_lex(new_unit);
     if (new_elem != NULL) {
-        new_elem->next = head;
+        new_elem->prev = head;
         head = new_elem;
     } else {
         *flag = 0;
@@ -42,11 +42,11 @@ lex* add_to_head(lex* head, FUNK func, double num, int* flag) {
     return head;
 }
 
-lex* add_to_tail(lex* tail, FUNK func, double num, int* flag) {
-    lex* new_elem = new_lex(func, num);
+lex* add_to_tail(lex* tail, elem new_unit, int* flag) {
+    lex* new_elem = new_lex(new_unit);
     if (new_elem != NULL) {
-        tail->next = new_elem;
-        new_elem->prev = tail;
+        tail->prev = new_elem;
+        new_elem->next = tail;
         tail = new_elem;
     } else {
         *flag = 0;
@@ -55,8 +55,8 @@ lex* add_to_tail(lex* tail, FUNK func, double num, int* flag) {
 }
 
 lex* return_to_head(lex* tail) {
-    while (tail != NULL && tail->prev != NULL)
-        tail = tail->prev;
+    while (tail != NULL && tail->next != NULL)
+        tail = tail->next;
     return tail;
 }
 
