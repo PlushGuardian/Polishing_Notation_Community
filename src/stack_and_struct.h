@@ -2,6 +2,7 @@
 #define SRC_STACK_AND_STRUCT_H_
 
 typedef enum FUNK_N {
+    ERR,
     ADD,
     SUBTR,
     NEGATE,
@@ -17,19 +18,16 @@ typedef enum FUNK_N {
     LN,
     X,
     NUM,
-    NO_RES,
-    ERR
+    NO_RES
 }FUNK;
 
 typedef enum TYPE_OF_LAST_LEXEME {
-    START,
-    OPERATOR,
-    FUNCTION,
-    MINUS,
-    NUMBER,
     L_BRACKET,
     R_BRACKET,
-    VAR,
+    FUNCTION,
+    OPERATOR,
+    MINUS,
+    NUMBER
 }LEX_TYPE;
 
 

@@ -67,69 +67,93 @@ char check_for_symbol(char ch) {
     FUNCTIONS FOR COMPARING PREVIOUS AND CURRENT CHARS
 ---------------------------------------------------------*/
 
-int complementing_types_of_units (LEX_TYPE last_lex, char cur) {
-    int res = 0;
-    switch (last_lex) {
-    case(START):
-        if (cur == 'B' || cur == 'n' || cur == 'l' || cur == '-' || cur == 'x')
-            res = 1;
-        break;
-    case(OPERATOR):
-        if (cur == 'B' || cur == 'n' || cur == 'l' || cur == 'x')
-            res = 1;
-        break;
-    case(FUNCTION):
-        if (cur == 'B' || cur == 'l')
-            res = 1;
-        break;
-    case(MINUS):
-        if (cur == 'B' || cur == 'n' || cur == 'l' || cur == 'x')
-            res = 1;
-        break;
-    case(NUMBER):
-        if (cur == 'b' || cur == 'n' || cur == 'o' || cur == '-')
-            res = 1;
-        break;
-    case(L_BRACKET):
-        if (cur == 'B' || cur == 'n' || cur == 'l' || cur == '-' || cur == 'x')
-            res = 1;
-        break;
-    case(R_BRACKET):
-        if (cur == 'B' || cur == 'b' || cur == 'o' || cur == '-')
-            res = 1;
-        break;
-    case(VAR):
-        if (cur == 'b' || cur == 'o' || cur == '-')
-            res = 1;
-        break;
+
+int complementing_types_of_units (LEX_TYPE prev_lex, LEX_TYPE cur_lex) {
+    int res;
+    switch (prev_lex) {
+        case (L_BRACKET):
+            switch (cur_lex) {
+                case(L_BRACKET):
+                case(FUNCTION):
+                case(MINUS):
+                case(NUMBER):
+                    res = 1;
+                    break;
+                default:
+                    res = 0;
+                    break;
+            }
+            break;
+        case (R_BRACKET):
+        case (NUMBER):
+            switch (cur_lex) {
+                case(R_BRACKET):
+                case(OPERATOR):
+                case(MINUS):
+                    res = 1;
+                    break;
+                default:
+                    res = 0;
+                    break;
+            }
+            break;
+        case (FUNCTION):
+            switch (cur_lex) {
+                case(L_BRACKET):
+                    res = 1;
+                    break;
+                default:
+                    res = 0;
+                    break;
+            }
+            break;
+        case (OPERATOR):
+        case (MINUS):
+            switch (cur_lex) {
+                case(L_BRACKET):
+                case(FUNCTION):
+                case(NUMBER):
+                    res = 1;
+                    break;
+                default:
+                    res = 0;
+                    break;
+            }
+            break;
     }
     return res;
 }
 
-LEX_TYPE determine_current_type(char cur) {
+LEX_TYPE determine_current_type(FUNK elem) {
     LEX_TYPE res;
-    switch (cur) {
-    case 'B':
-        res = L_BRACKET;
-        break;
-    case 'b':
-        res = R_BRACKET;
-        break;
-    case 'n':
-        res = NUMBER;
-        break;
-    case 'o':
-        res = OPERATOR;
-        break;
-    case 'l':
-        res = FUNCTION;
-        break;
-    case '-':
-        res = MINUS;
-        break;
-    case 'x':
-        res = VAR;
-        break;
+    switch (elem) {
+        case (ADD):
+        case (DIVIDE):
+        case (MULTI):
+            res = OPERATOR;
+            break; 
+        case (NEGATE):
+        case (SUBTR):
+            res = MINUS;
+            break;
+        case (SIN):
+        case (COS):
+        case (TAN):
+        case (CTG):
+        case (SQRT):
+        case (LN):
+            res = FUNCTION;
+            break;
+        case (L_BRACK):
+            res = L_BRACKET;
+            break;
+        case (R_BRACK):
+            res = R_BRACKET;
+            break;
+        case (NUM):
+        case (X):
+            res = NUMBER;
+            break;
     } 
     return res;
 }

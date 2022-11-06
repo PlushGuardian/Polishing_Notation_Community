@@ -11,8 +11,8 @@ int check_for_number(char ch);
 char check_for_symbol(char ch);
 
 // FUNCTIONS FOR COMPARING PREVIOUS AND CURRENT CHARS
-int complementing_types_of_units (LEX_TYPE last_lex, char cur);
-LEX_TYPE determine_current_type(char cur);
+int complementing_types_of_units (LEX_TYPE prev_lex, LEX_TYPE cur_lex);
+LEX_TYPE determine_current_type(FUNK elem);
 
 // FUNCTIONS FOR PARSING MULTICHAR OPERATORS
 char* add_elem_to_array(char* arr, int size, char elem, int* flag);
