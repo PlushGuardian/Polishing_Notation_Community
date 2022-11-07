@@ -2,24 +2,73 @@
 #include "structures.h"
 #include "validation.h"
 #include "output_supplement.h"
+#include "shunting_yard.h"
 
+lex* formula_1() ;
+void validation_check(lex* head);
 
 int main() {
-    elem unit;
-    unit.func = 0;
-    unit.num = -1;
-    int flag = 1;
-    lex* head = new_lex(unit);
-    for (int i = 1; i < 15; i++) {
-        unit.func = i;
-        head = add_to_head(head, unit,&flag);
-        if (flag == 0) break;
-    }
-    print_list(head);
+    lex* head = formula_1();
+    print_formula(head);
+    validation_check(head);
+    head = shunting_yard(head);
+    print_formula(head);
+    free_list(head);
+    return 0;
+}
+
+void validation_check(lex* head) {
+    int flag;
     flag = validation(head);
     printf("is this a valid list?\n");
     if (flag) printf("yes\n");
     else printf("no\n");
-    free_list(head);
-    return 0;
+}
+
+
+lex* formula_1() {  //  3 + 4 × 2 ÷ (1 − 5)    3 4 2 * 1 5 - / +
+    lex* primer;
+    int flag = 1;
+    elem unit;
+    unit.func = L_BRACK;
+    unit.num = -1;
+    primer = new_lex(unit);
+    unit.func = NUM;
+    unit.num = 3;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = ADD;
+    unit.num = -1;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = NUM;
+    unit.num = 4;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = MULTI;
+    unit.num = -1;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = NUM;
+    unit.num = 2;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = DIVIDE;
+    unit.num = -1;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = L_BRACK;
+    unit.num = -1;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = NUM;
+    unit.num = 1;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = SUBTR;
+    unit.num = -1;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = NUM;
+    unit.num = 5;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = R_BRACK;
+    unit.num = -1;
+    primer = add_to_tail(primer, unit, &flag);
+    unit.func = R_BRACK;
+    unit.num = -1;
+    primer = add_to_tail(primer, unit, &flag);
+    primer = return_to_head(primer);
+    return primer;
 }

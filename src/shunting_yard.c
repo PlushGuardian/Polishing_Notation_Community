@@ -1,6 +1,8 @@
 #include "structures.h"
 #include "shunting_yard.h"
 #include <stdlib.h>
+#include <stdio.h>
+#include "output_supplement.h"
 
 lex* shunting_yard(lex* head) {
     elem primer;
@@ -11,14 +13,17 @@ lex* shunting_yard(lex* head) {
     lex* oper = new_lex(primer);
 
     while (head != NULL && flag) {
-        if (head->unit.func == NUM && head->unit.func == X) {
+        print_formula_reverse(res);
+        if (head->unit.func == NUM || head->unit.func == X) {
             res = add_to_tail(res, head->unit, &flag);
         } else if (head->unit.func == L_BRACK) {
             oper = add_to_head(oper, head->unit, &flag);
         } else if (head->unit.func == R_BRACK) {
+            printf("~\n");
             while (oper != NULL && oper->unit.func != L_BRACK && flag) {
                 res = add_to_tail(res, oper->unit, &flag);
                 oper = remove_lex(oper, &flag);
+                printf("~\n");
             }
             oper = remove_lex(oper, &flag);
             if (oper != NULL && check_for_func(oper->unit.func)) {
@@ -27,17 +32,20 @@ lex* shunting_yard(lex* head) {
             }
         } else {
             int prec_head = precedence(head->unit.func), prec_stack = precedence(oper->unit.func);
+            printf("precedence: operator %d  queue %d\n", prec_stack, prec_head);
             while (prec_stack > prec_head && oper != NULL && flag) {
                 prec_stack = precedence(oper->unit.func);
                 res = add_to_tail(res, oper->unit, &flag);
                 oper = remove_lex(oper, &flag);
             }
+            oper = add_to_head(oper, head->unit, &flag);
         }
         head = remove_lex(head, &flag);
     }
 
     if (oper != NULL) free_list(oper);
     res = return_to_head(res);
+    print_formula(res);
     res = remove_lex(res, &flag); // remove primer
     return res;
 }
@@ -107,6 +115,26 @@ int precedence(FUNK func) {
         default:
             result = 0;
             break;
+        // case SIN:
+        // case COS:
+        // case TAN:
+        // case CTG:
+        // case SQRT:
+        // case LN:
+        //     result = 1;
+        //     break;
+        // case ADD:
+        // case SUBTR:
+        //     result = 2;
+        //     break;
+        // case NEGATE:
+        // case DIVIDE:
+        // case MULTI:
+        //     result = 3;
+        //     break;
+        // default:
+        //     result = 0;
+        //     break;
     }
     return result;
 }

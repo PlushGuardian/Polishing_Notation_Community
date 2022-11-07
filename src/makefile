@@ -1,5 +1,5 @@
 CC=gcc -Wall -Werror -Wextra -g -ggdb3
-SOURCES= output_supplement.c structures.c testing_structures.c validation.c
+SOURCES= output_supplement.c shunting_yard.c structures.c testing_structures.c validation.c
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=../build/graph
 
