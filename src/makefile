@@ -1,14 +1,18 @@
-CC=gcc -Wall -Werror -Wextra -g
-SOURCES=
+CC=gcc -Wall -Werror -Wextra -g -ggdb3
+SOURCES= output_supplement.c structures.c testing_structures.c 
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=../build/graph
 
 it:
 	make build
+	valgrind $(EXECUTABLE)
 	make clean
 
 build: $(SOURCES) $(EXECUTABLE)
-	
+
+run:
+	./$(EXECUTABLE)
+
 $(EXECUTABLE): $(OBJECTS) 
 	$(CC)  $(OBJECTS) -o $@
 

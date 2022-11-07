@@ -1,11 +1,4 @@
 
-// MAIN STRUCT OPERATIONS
-lex* new_lex(elem data);
-lex* remove_lex(lex* head, int* flag);
-lex* add_to_head(lex* head, elem new_unit, int* flag);
-lex* add_to_tail(lex* tail, elem new_unit, int* flag);
-lex* return_to_head(lex* tail);
-int free_list(lex* head);
 
 typedef enum FUNK_N {
     ADD,
@@ -38,3 +31,12 @@ typedef struct lexical_units {
     struct lexical_units* prev;
     elem unit;
 } lex;
+
+
+// MAIN STRUCT OPERATIONS
+lex* new_lex(elem data);
+lex* remove_lex(lex* head, int* flag);
+lex* add_to_head(lex* head, elem new_unit, int* flag);
+lex* add_to_tail(lex* tail, elem new_unit, int* flag);
+lex* return_to_head(lex* tail);
+int free_list(lex* head);
