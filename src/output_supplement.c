@@ -1,22 +1,22 @@
 #include <stdio.h>
-#include "validation.h"
+// #include "validation.h"
 #include "structures.h"
 #include "output_supplement.h"
 
 
-void print_one_node(lex* head) {
+void print_one_node(elem unit) {
     printf("TYPE OF NODE: ");
-    output_of_func(head->unit.func);
+    output_of_func(unit.func);
     printf("\n");
-    if (head->unit.func == NUM) printf("       VALUE: %d\n", head->unit.num);
+    if (unit.func == NUM) printf("       VALUE: %f\n", unit.num);
 }
 
 void print_list(lex* head) {
     int count = 1;
     printf("+--------------------------------------+\n");
     while (head != NULL) {
-        printf("\n~~~ELEMENT %d\n", count);
-        print_one_node(head);
+        printf("~~~ELEMENT %d\n", count);
+        print_one_node(head->unit);
         head = head->prev;
     }
     printf("+--------------------------------------+\n");

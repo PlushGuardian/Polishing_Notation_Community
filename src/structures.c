@@ -5,8 +5,7 @@ lex* new_lex(elem data) {
     lex* new_elem = (lex*)malloc(sizeof(lex));
     if (new_elem != NULL) {
         new_elem->unit.func = data.func;
-        if (data.num != -1)
-            new_elem->unit.num = data.num;
+        new_elem->unit.num = data.num;
         new_elem->next = NULL;
         new_elem->prev = NULL;
     }
