@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "structures.h"
+#include "validation.h"
 #include "output_supplement.h"
+
 
 int main() {
     elem unit;
@@ -14,6 +16,10 @@ int main() {
         if (flag == 0) break;
     }
     print_list(head);
+    flag = validation(head);
+    printf("is this a valid list?\n");
+    if (flag) printf("yes\n");
+    else printf("no\n");
     free_list(head);
     return 0;
 }

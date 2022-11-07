@@ -17,8 +17,9 @@ typedef enum FUNK_N {
     X,
     NUM,
     ERR,
-    NO_RES
+    NO_RES,
 }FUNK;
+
 
 
 typedef struct Element {

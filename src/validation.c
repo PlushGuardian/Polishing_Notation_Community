@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "validation.h"
+
 #include "structures.h"
+#include "validation.h"
 
 int validation(lex* head) {
     int res = -1, bracket_count = 0;
@@ -11,18 +12,20 @@ int validation(lex* head) {
         head = head->prev;
         res = 1;
     }
-    while (head != NULL) {
+    while (head != NULL && res) {
         cur_type = determine_current_type(head->unit.func);
         res = res * complementing_types_of_units(prev_type, cur_type);
-        if (head->unit.func == L_BRACKET) bracket_count--;
-        if (head->unit.func == R_BRACKET) bracket_count++;
+        if (head->unit.func == L_BRACK) bracket_count--;
+        if (head->unit.func == R_BRACK) bracket_count++;
+        if (head->prev != NULL && head->prev->prev == NULL) {
+            if (cur_type != NUMBER && cur_type != R_BRACKET) res = 0;
+        }
         prev_type = cur_type;
         head = head->prev;
     }
     if (bracket_count != 0) res = 0;
     return res;
 }
-
 
 int complementing_types_of_units (LEX_TYPE prev_lex, LEX_TYPE cur_lex) {
     int res;
@@ -109,6 +112,9 @@ LEX_TYPE determine_current_type(FUNK elem) {
         case (NUM):
         case (X):
             res = NUMBER;
+            break;
+        default:
+            res = 10;
             break;
     } 
     return res;
