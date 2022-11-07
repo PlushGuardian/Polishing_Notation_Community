@@ -1,3 +1,4 @@
+
 #include "calculation.h"
 #include "stack_and_struct.h"
 #include "output_supplement.h"
