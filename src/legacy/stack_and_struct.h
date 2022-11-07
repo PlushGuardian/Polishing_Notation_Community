@@ -2,6 +2,7 @@
 #define SRC_STACK_AND_STRUCT_H_
 
 typedef enum FUNK_N {
+    ERR,
     ADD,
     SUBTR,
     NEGATE,
@@ -17,14 +18,10 @@ typedef enum FUNK_N {
     LN,
     X,
     NUM,
+    NO_RES
 }FUNK;
 
 typedef enum TYPE_OF_LAST_LEXEME {
-    START,
-    OPERATOR,
-    FUNCTION,
-    MINUS,
-    NUMBER,
     L_BRACKET,
     R_BRACKET,
     VAR,
@@ -42,22 +39,23 @@ stack* new_node(double data);
 void push(stack** root, double data);
 double pop(stack** root);
 
+typedef struct Element {
+  FUNK func;
+  double num;
+} elem;
+
 // OPERATIONS FOR WORKING WITH STRUCTURE (QUEUE OF OPERANDS AND OPERATIONS)
 struct lexical_units {
-    TYPE type;
     struct lexical_units* next;
-    union {
-        FUNK func;
-        double num;
-        double is_x;
-    } elem;
+    struct lexical_units* prev;
+    elem unit;
 } ;
 typedef struct lexical_units lex;
 
-void push_lex(lex** root, TYPE type, double data, int *flag);
+void push_lex(lex** root, double data, int *flag);
 void pop_lex(lex** root); 
 lex* new_node_lex();
-lex* slide_lex(lex* elem, TYPE type, double data, int *flag);
+lex* slide_lex(lex* elem, double data, int *flag);
 int reverse_stack(lex** old, lex** new_);
 
 
@@ -74,7 +72,6 @@ struct flags {
 };
 
 struct stack_for_output {
-    TYPE type;
     double func;
     int num;
     int is_x;

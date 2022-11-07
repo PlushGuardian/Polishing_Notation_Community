@@ -1,86 +1,25 @@
-#include "stack_and_struct.h"
-#include "output_supplement.h"
 #include <stdio.h>
+#include "validation.h"
+#include "structures.h"
+#include "output_supplement.h"
 
 
-
-void print_struct(lex* root) {
-    int i = 0;
-    while (root != NULL) {
-        printf("Element %d:\n", i);
-        printf("    Type ");
-        output_of_type(root->type);
-        printf("\n");
-        if(root->type == NUM)
-            printf("    Number %lf\n", root->elem.num);
-        else {
-            printf("    Function ");
-            output_of_func( root->elem.func);
-            printf("\n");
-        }
-        root = root->next;
-        i++;
-    }
-}
-
-void print_one_node(lex* root) {
-    printf("Element:\n");
-    printf("    Type ");
-    output_of_type(root->type);
+void print_one_node(lex* head) {
+    printf("TYPE OF NODE: ");
+    output_of_func(head->unit.func);
     printf("\n");
-    if (root->type == 0) {
-        printf("    Number %lf\n", root->elem.num);
-    } else if (root->type == 1) {
-        printf("    Function %d\n", root->elem.func);
-        output_of_func(root->elem.func);
-        printf("\n");
-    } else {
-        printf("    Variable %d\n", (int)root->elem.is_x);
-    }
-
+    if (head->unit.func == NUM) printf("       VALUE: %d\n", head->unit.num);
 }
 
-void output_of_type(int num) {
-    switch (num){
-        case 0:
-        printf("NUM");
-        break;
-        case 1:
-        printf("OP");
-        break;
-        case 2:
-        printf("X");
-        break;
+void print_list(lex* head) {
+    int count = 1;
+    printf("+--------------------------------------+\n");
+    while (head != NULL) {
+        printf("\n~~~ELEMENT %d\n", count);
+        print_one_node(head);
+        head = head->prev;
     }
-}
-
-void output_of_lex_type(int num) {
-    switch (num){
-        case 0:
-        printf("START");
-        break;
-        case 1:
-        printf("OPERATOR");
-        break;
-        case 2:
-        printf("FUNCTION");
-        break;
-        case 3:
-        printf("MINUS");
-        break;
-        case 4:
-        printf("NUMBER");
-        break;
-        case 5:
-        printf("L_BRACKET");
-        break;
-        case 6:
-        printf("R_BRACKET");
-        break;
-        case 7:
-        printf("VAR");
-        break;
-    }
+    printf("+--------------------------------------+\n");
 }
 
 void output_of_func(int num) {
@@ -123,6 +62,35 @@ void output_of_func(int num) {
         break;
         case 12:
         printf("LN");
+        break;
+        case 13:
+        printf("X");
+        break;
+        case 14:
+        printf("NUM");
+        break;
+    }
+}
+
+void output_of_lex_type(int num) {
+    switch (num){
+        case 0:
+        printf("L_BRACKET");
+        break;
+        case 1:
+        printf("R_BRACKET");
+        break;
+        case 2:
+        printf("FUNCTION");
+        break;
+        case 3:
+        printf("OPERATOR");
+        break;
+        case 4:
+        printf("MINUS");
+        break;
+        case 5:
+        printf("NUMBER");
         break;
     }
 }

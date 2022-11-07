@@ -15,6 +15,7 @@
         "ratio": "c",
         "stack.h": "c",
         "stack_and_struct.h": "c",
-        "input_and_parse.h": "c"
+        "input_and_parse.h": "c",
+        "validation.h": "c"
     }
 }
