@@ -13,10 +13,11 @@ lex* new_lex(elem data) {
 }
 
 lex* remove_lex(lex* head, int* flag) {
+    lex* temp;
     if (head != NULL) {
-        head = head->next;
-        free(head->prev);
-        head->prev = NULL;
+        temp = head;
+        head = head->prev;
+        free(temp);
     } else {
         *flag = 0;
     }

@@ -3,9 +3,14 @@ SOURCES= output_supplement.c structures.c testing_structures.c
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=../build/graph
 
-it:
+itv:
 	make build
 	valgrind $(EXECUTABLE)
+	make clean
+
+it:
+	make build
+	make run
 	make clean
 
 build: $(SOURCES) $(EXECUTABLE)
