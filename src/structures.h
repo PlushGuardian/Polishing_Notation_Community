@@ -39,5 +39,6 @@ lex* new_lex(elem data);
 lex* remove_lex(lex* head, int* flag);
 lex* add_to_head(lex* head, elem new_unit, int* flag);
 lex* add_to_tail(lex* tail, elem new_unit, int* flag);
+double pop(lex** stack, int* flag);
 lex* return_to_head(lex* tail);
 int free_list(lex* head);

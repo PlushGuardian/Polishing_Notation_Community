@@ -24,6 +24,15 @@ lex* remove_lex(lex* head, int* flag) {
     return head;
 }
 
+double pop(lex** stack, int* flag) {
+    double res = 1;
+    if (stack) {
+        res = (*stack)->unit.num;
+        *stack = remove_lex(*stack, flag);
+    }
+    return res;
+}
+
 lex* add_to_head(lex* head, elem new_unit, int* flag) {
     lex* new_elem = new_lex(new_unit);
     if (new_elem != NULL) {

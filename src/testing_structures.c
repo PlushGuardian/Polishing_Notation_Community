@@ -3,6 +3,7 @@
 #include "validation.h"
 #include "output_supplement.h"
 #include "shunting_yard.h"
+#include "calculation.h"
 
 lex* formula_1() ;
 void validation_check(lex* head);
@@ -13,6 +14,9 @@ int main() {
     validation_check(head);
     head = shunting_yard(head);
     print_formula(head);
+    int flag = 1;
+    double res = calculation(head, &flag, 0);
+    printf("the result is: %f\n", res);
     free_list(head);
     return 0;
 }

@@ -33,10 +33,10 @@ lex* shunting_yard(lex* head) {
         } else {
             int prec_head = precedence(head->unit.func), prec_stack = precedence(oper->unit.func);
             printf("precedence: operator %d  queue %d\n", prec_stack, prec_head);
-            while (prec_stack > prec_head && oper != NULL && flag) {
-                prec_stack = precedence(oper->unit.func);
+            while (prec_stack >= prec_head && oper != NULL && flag) {
                 res = add_to_tail(res, oper->unit, &flag);
                 oper = remove_lex(oper, &flag);
+                prec_stack = precedence(oper->unit.func);
             }
             oper = add_to_head(oper, head->unit, &flag);
         }
